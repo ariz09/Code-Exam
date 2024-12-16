@@ -1,0 +1,48 @@
+package main
+
+import "fmt"
+
+func lengthOfLIS(nums []int) int {
+		if len(nums) == 0 {
+				return 0
+		}
+
+
+		dp := make([]int, len(nums))
+		for i := range dp {
+				dp[i] = 1
+		}
+
+
+		for i := 1; i < len(nums); i++ {
+				for j := 0; j < i; j++ {
+						if nums[i] > nums[j] {
+								dp[i] = max(dp[i], dp[j] + 1)
+						}
+				}
+		}
+
+
+		result := 0
+		for _, length := range dp {
+				result = max(result, length)
+		}
+
+		return result
+}
+
+
+func max(a, b int) int {
+		if a > b {
+				return a
+		}
+		return b
+}
+
+func main() {
+		// Example usage
+		inputNumbers := []int{10, 9, 2, 5, 3, 7, 101, 18}
+		result := lengthOfLIS(inputNumbers)
+		fmt.Println(result)
+
+}
